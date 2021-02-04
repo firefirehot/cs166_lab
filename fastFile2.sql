@@ -23,10 +23,10 @@ CREATE TABLE Dept (dno CHAR(11), dname text, office text, ssn CHAR(11),
 	PRIMARY KEY (dno),
 	FOREIGN KEY (ssn) REFERENCES Professor(ssn) ON DELETE SET NULL
 	);
-CREATE TABLE Project (pno CHAR(11), sponsor text, start_date text, end_date text, budget float, prof_superviser CHAR(11),
+CREATE TABLE Project (pno CHAR(11), sponsor text, start_date text, end_date text, budget float, prof_superviser CHAR(11), ssn CHAR(11),
  	PRIMARY KEY (pno),
 	FOREIGN KEY (ssn) REFERENCES Professor(ssn) ON DELETE CASCADE,
-	FOREIGN KEY (prof_superviser) REFERENCES Professor(ssn) ON DELETE CASCADE 
+	FOREIGN KEY (prof_superviser) REFERENCES Professor(ssn) ON DELETE CASCADE
 	);
 CREATE TABLE Graduate (SSN CHAR(11), advisor CHAR(11), name text, age INTEGER, deg_pg text, prof_superviser CHAR(11), dno CHAR(11),
 	PRIMARY KEY (SSN),
@@ -49,7 +49,6 @@ CREATE TABLE work_proj(pno CHAR(11), SSN CHAR(11), since float,
 	FOREIGN KEY (pno) REFERENCES Project(pno),
 	FOREIGN KEY (SSN) REFERENCES Graduate(SSN)
 	);
-
 --If a projessor is deleted the project they was managing is deleted
 --If a professor is deleted the department they was running is set to NULL
 --If a professor is deleted the project they was supervising is deleted
@@ -57,46 +56,46 @@ CREATE TABLE work_proj(pno CHAR(11), SSN CHAR(11), since float,
 --If a graduate is deleted the student they were advising is set to "next student"
 
 -- manditory "one or more relations" must be defined elsewhere(in code). You can take it 
---as "many" instead, with "one or more" enforced elsewhere. 
+--s "many" instead, with "one or more" enforced elsewhere. 
 --affected work_in, work_dept, advise, major, supervise.
 
 
---CREATE TABLE Musicians (ssn CHAR(11), name text,
---	PRIMARY KEY (ssn),
---	);
---CREATE TABLE Album (albumIdentifier CHAR(11), copyrightDate text, speed float, title text, ssn CHAR(11),
---	PRIMARY KEY (albumIdentifier),
---	FOREIGN KEY (ssn) REFERENCES Musicians(ssn) ON DELETE NO ACTION
---	);
---CREATE TABLE Songs (songId CHAR(11), title text, author text, albumIdentifier CHAR(11),
---	PRIMARY KEY (songId),
---	FOREIGN KEY (albumIdentifier) REFERENCES Album(albumIdentifier) ON DELETE CASCADE
---	);
---CREATE TABLE Instrument (instrId CHAR(11), dname text, key text,
---	PRIMARY KEY (instrId)
---	);
---CREATE TABLE Place (address text,
---	PRIMARY KEY (address)
---	);
---CREATE TABLE Telephone (phone_no text, address text,
---	PRIMARY KEY (address),
---	FOREIGN KEY (address) REFERENCES Place(address) ON DELETE CASCADE
---	);
---CREATE TABLE Plays (instrId CHAR(11), ssn CHAR(11),
---	PRIMARY KEY (instrId, ssn),
---	FOREIGN KEY (instrId) REFERENCES Instrument(instrId),
---	FOREIGN KEY (ssn) REFERENCES Musicians(ssn)
---	);
---CREATE TABLE Perform (ssn CHAR(11),songId CHAR(11),
---	PRIMARY KEY (ssn, songId),
---	FOREIGN KEY (ssn) REFERENCES Musicians(ssn),
---	FOREIGN KEY (songId) REFERENCES Songs(songId)
---	);
---Create Table Lives (ssn CHAR(11), address text,
---	PRIMARY KEY (ssn, address),
---	FOREIGN KEY (ssn) REFERENCES Musicians(ssn),
---	FOREIGN KEY (address) REFERENCES Place(address)
---	);
+CREATE TABLE Musicians (ssn CHAR(11), name text,
+	PRIMARY KEY (ssn)
+	);
+CREATE TABLE Album (albumIdentifier CHAR(11), copyrightDate text, speed float, title text, ssn CHAR(11),
+	PRIMARY KEY (albumIdentifier),	
+	FOREIGN KEY (ssn) REFERENCES Musicians(ssn) ON DELETE NO ACTION
+	);
+CREATE TABLE Songs (songId CHAR(11), title text, author text, albumIdentifier CHAR(11),
+	PRIMARY KEY (songId),
+	FOREIGN KEY (albumIdentifier) REFERENCES Album(albumIdentifier) ON DELETE CASCADE	
+	);
+CREATE TABLE Instrument (instrId CHAR(11), dname text, key text,
+	PRIMARY KEY (instrId)
+	);
+CREATE TABLE Place (address text,
+	PRIMARY KEY (address)
+	);
+CREATE TABLE Telephone (phone_no text, address text,
+	PRIMARY KEY (address),
+	FOREIGN KEY (address) REFERENCES Place(address) ON DELETE CASCADE
+	);
+CREATE TABLE Plays (instrId CHAR(11), ssn CHAR(11),
+	PRIMARY KEY (instrId, ssn),
+	FOREIGN KEY (instrId) REFERENCES Instrument(instrId),
+	FOREIGN KEY (ssn) REFERENCES Musicians(ssn)
+	);
+CREATE TABLE Perform (ssn CHAR(11),songId CHAR(11),
+	PRIMARY KEY (ssn, songId),
+	FOREIGN KEY (ssn) REFERENCES Musicians(ssn),
+	FOREIGN KEY (songId) REFERENCES Songs(songId)
+	);
+Create Table Lives (ssn CHAR(11), address text,
+	PRIMARY KEY (ssn, address),
+	FOREIGN KEY (ssn) REFERENCES Musicians(ssn),
+	FOREIGN KEY (address) REFERENCES Place(address)
+	);
 
 
 --If an album is deleted all the songs that were in it are deleted.
